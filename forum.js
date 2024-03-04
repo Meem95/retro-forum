@@ -21,7 +21,7 @@ const fetchDiscussionCategory = () =>{
             discussionCardBody.innerHTML = `
             <div  class="card lg:w-[780px] bg-[#7D7DFC1A] shadow-xl lg:p-8 mb-6">
               <div class="">
-                <div id="online" class="avatar ${card.isActive === true ? 'online' : 'offline'}  placeholder " >
+                <div id="online" class="avatar ${card.isActive === true ? 'online' : 'offline'}  placeholder ml-36 mt-5" >
                   <div
                     class="bg-neutral text-neutral-content rounded-full w-16"
                   >
@@ -188,7 +188,7 @@ const msg = (values) => {
   newTitle.textContent = title;
 
    newTitle.innerHTML = `<div
-   class="flex flex-col lg:flex-row lg:w-[390px] bg-white lg:p-6 rounded-lg mb-4"
+   class="flex flex-col lg:flex-row lg:w-[390px] bg-white lg:p-6 p-4 rounded-lg mb-4"
   >
     <div>
       <h2>${title}<div class="flex flex-col lg:flex-row">
