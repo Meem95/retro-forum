@@ -14,11 +14,14 @@ const fetchDiscussionCategory = () =>{
        // discussionCard.textContent = '';
        response.posts.forEach((card) => {
         //console.log(card);
+        const test = encodeURIComponent(JSON.stringify(card).replace("'",""));
+        //console.log(test);
+      
         const discussionCardBody =  document.createElement('div');
             discussionCardBody.innerHTML = `
             <div  class="card lg:w-[780px] bg-[#7D7DFC1A] shadow-xl lg:p-8 mb-6">
               <div class="">
-                <div id="online" class="avatar online placeholder">
+                <div id="online" class="avatar ${card.isActive === true ? 'online' : 'offline'}  placeholder " >
                   <div
                     class="bg-neutral text-neutral-content rounded-full w-16"
                   >
@@ -58,12 +61,14 @@ const fetchDiscussionCategory = () =>{
                 <div
                   class="card-actions items-center justify-center lg:justify-end"
                 >
-                  <div onClick="msg('${card.title}.${card.view_count}')" id = "msg1" class=""><img src="images/email.svg" alt="" /></div>
+                  <div onClick="msg('${test}')" class=""><img src="images/email.svg" alt="" /></div>
                 </div>
               </div>
             </div>
             `;
               discussionCard.appendChild(discussionCardBody);
+                 /// hide loading spinner
+              toggleLoadingSpinner(false);
               const authorOnline = document.getElementById('online');
               if (!authorOnline) {
                 console.error('Author online element not found');
@@ -80,42 +85,7 @@ const fetchDiscussionCategory = () =>{
     });
     })
 }
-let clickCount = 0;
-const msg = (values) => {
-  const [title, viewCount] = values.split('.');
-  
-  // Logging the individual values
-  console.log('Title:', title);
-  console.log('View Count:', viewCount);
-  
-  clickCount++;
-  
-  // Display the click count in another div
-  const countContainer = document.getElementById('click-count');
-  countContainer.textContent = `Mark as read: ${clickCount}`;
 
-
-  const titleContainer = document.getElementById('title-container');
-  const newTitle = document.createElement('div');
-  newTitle.textContent = title;
-
-   newTitle.innerHTML = `<div
-   class="flex flex-col lg:flex-row lg:w-[390px] bg-white lg:p-6 rounded-lg mb-4"
-  >
-    <div>
-      <h2>${title}<div class="flex flex-col lg:flex-row">
-      <img class="w-5" src="images/eye.svg" alt=""/> <span>${viewCount}</span>
-    </div></h2>
-    </div>
-    <div>
-      
-    </div>
-  </div>`;
-  
-  console.log(titleContainer);
- 
-  titleContainer.appendChild(newTitle);
-}
 
 if(!searchData){
   fetchDiscussionCategory();
@@ -134,12 +104,13 @@ if(!searchData){
         if(postData){
           discussionCard.textContent = ''; 
           postData.forEach((card) => {
-            //console.log(card);
+            console.log(card);
+            const test = encodeURIComponent(JSON.stringify(card).replace("'",""));
             const discussionCardBody =  document.createElement('div');
                 discussionCardBody.innerHTML = `
                 <div  class="card lg:w-[780px] bg-[#7D7DFC1A] shadow-xl lg:p-8 mb-6">
                   <div class="">
-                    <div id="online" class="avatar online placeholder">
+                    <div id="online" class="avatar ${card.isActive === true ? 'online' : 'offline'}  placeholder  placeholder">
                       <div
                         class="bg-neutral text-neutral-content rounded-full w-16"
                       >
@@ -179,77 +150,133 @@ if(!searchData){
                     <div
                       class="card-actions items-center justify-center lg:justify-end"
                     >
-                      <div id="msg" class=""><img src="images/email.svg" alt="" /></div>
+                      <div  onClick='msg("${test}")'  class=""><img src="images/email.svg" alt="" /></div>
                     </div>
                   </div>
                 </div>
                 `
                   discussionCard.appendChild(discussionCardBody);
         });
+           /// hide loading spinner
+           toggleLoadingSpinner(false);
         }
       }
       searchDiscussionCategory(postData);
    }
-// const fetchPostCard = () =>{
-//     const url = "https://openapi.programming-hero.com/api/retro-forum/latest-posts";
-//     fetch (url)
-//     .then((res) => res.json())
-//     .then((data)=> {
-//         data.forEach((item) => {
-//             //console.log(item)
-//             const latestPostCardBody = document.createElement("div");
-//             latestPostCardBody.innerHTML = ` 
-//             <div class="card lg:w-96  border border-[[#12132D99]] shadow-sm mb-5">
-//             <div class="card-body">
-//               <div class="w-full">
-//                 <img src="${item.cover_image}" alt="" />
-//               </div>
-//               <div class="flex lg:flex-row w-full">
-//                 <img class="" src="images/cal.svg" alt="" />
-//                 <p>${item.author.posted_date ? item.author.posted_date : " No Publish Date"}</p>
-//               </div>
-
-//               <h2 class="card-title" style="font-size: 18px!important;">
-//               ${item.title}
-//               </h2>
-//               <p class="text-[#12132D99]">
-//               ${item.description}
-//               </p>
-//               <hr class="border-dashed border-t border-2" />
-
-//               <div class="card-actions items-center justify-center lg:justify-start">
-//                 <div ><img class="w-12 rounded-full" src="${item.profile_image}" alt="" /></div>
-//                 <div class=""><p>${item.author.name}</p></div>
-//               </div>
-//               <div class="lg:text-left text-center  lg:ml-14 lg:-mt-2">
-//                   <p>${item.author.designation ? item.author.designation : "Unknown" }</p>
-//               </div>
-//             </div>
-//           </div>
-//             `;
-
-//             latestPostCard.appendChild(latestPostCardBody);
-//         })
-//     })
-// }
 
 
+   let clickCount = 0;
+const msg = (values) => {
+  const decodeObj =JSON.parse(decodeURIComponent(values));
+  console.log(decodeObj);
+  
+  const {title, view_count:viewCount} = decodeObj
+  
+  // Logging the individual values
+  console.log('Title:', title);
+  console.log('View Count:', viewCount);
+  
+  clickCount++;
+  
+  // Display the click count in another div
+  const countContainer = document.getElementById('click-count');
+  countContainer.textContent = `Mark as read: ${clickCount}`;
+
+
+  const titleContainer = document.getElementById('title-container');
+  const newTitle = document.createElement('div');
+  newTitle.textContent = title;
+
+   newTitle.innerHTML = `<div
+   class="flex flex-col lg:flex-row lg:w-[390px] bg-white lg:p-6 rounded-lg mb-4"
+  >
+    <div>
+      <h2>${title}<div class="flex flex-col lg:flex-row">
+      <img class="w-5" src="images/eye.svg" alt=""/> <span>${viewCount}</span>
+    </div></h2>
+    </div>
+    <div>
+      
+    </div>
+  </div>`;
+  
+  console.log(titleContainer);
+ 
+  titleContainer.appendChild(newTitle);
+}
+const fetchPostCard = () =>{
+    const url = "https://openapi.programming-hero.com/api/retro-forum/latest-posts";
+    fetch (url)
+    .then((res) => res.json())
+    .then((data)=> {
+        data.forEach((item) => {
+            //console.log(item)
+            const latestPostCardBody = document.createElement("div");
+            latestPostCardBody.innerHTML = ` 
+            <div class="card lg:w-96  border border-[[#12132D99]] shadow-sm mb-5">
+            <div class="card-body">
+              <div class="w-full">
+                <img src="${item.cover_image}" alt="" />
+              </div>
+              <div class="flex lg:flex-row w-full">
+                <img class="" src="images/cal.svg" alt="" />
+                <p>${item.author.posted_date ? item.author.posted_date : " No Publish Date"}</p>
+              </div>
+
+              <h2 class="card-title" style="font-size: 18px!important;">
+              ${item.title}
+              </h2>
+              <p class="text-[#12132D99]">
+              ${item.description}
+              </p>
+              <hr class="border-dashed border-t border-2" />
+
+              <div class="card-actions items-center justify-center lg:justify-start">
+                <div ><img class="w-12 rounded-full" src="${item.profile_image}" alt="" /></div>
+                <div class=""><p>${item.author.name}</p></div>
+              </div>
+              <div class="lg:text-left text-center  lg:ml-14 lg:-mt-2">
+                  <p>${item.author.designation ? item.author.designation : "Unknown" }</p>
+              </div>
+            </div>
+          </div>
+            `;
+
+            latestPostCard.appendChild(latestPostCardBody);
+        })
+    })
+}
 
 /// search handle
 const searchHandle = ()=> {
-  // toggleLoadingSpinner(true);
+  toggleLoadingSpinner(true);
   const searchField = document.getElementById('search-field');
   const searchValue = searchField.value;
+  if(searchValue){
+    setTimeout(()=> {
+
+    },20000)
+  }
    loadPost(searchValue);
   console.log(searchValue);
   searchField.value ='';
+}
+// spinner
+toggleLoadingSpinner = (isLoading) => {
+  const spinner = document.getElementById('loading-spinner');
+  if(isLoading){
+  spinner.classList.remove('hidden');
+  } 
+  else{
+      spinner.classList.add('hidden');
+  } 
 }
 const handleShowAll = () => {
   searchData=true;
   console.log(searchData);
   searchHandle(searchData);
 }
-// fetchPostCard()
+fetchPostCard()
 
   
 
