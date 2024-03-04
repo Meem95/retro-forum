@@ -254,10 +254,11 @@ const searchHandle = ()=> {
   const searchValue = searchField.value;
   if(searchValue){
     setTimeout(()=> {
-
-    },20000)
+      loadPost(searchValue);
+      toggleLoadingSpinner(false);
+    },2000)
   }
-   loadPost(searchValue);
+   //loadPost(searchValue);
   console.log(searchValue);
   searchField.value ='';
 }
