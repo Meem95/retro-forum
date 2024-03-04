@@ -75,15 +75,19 @@
               </p>
               <div class="flex items-center justify-center lg:justify-start">
                 <input
+                id="search-field"
                   type="text"
                   placeholder="Search here anything..."
                   class="border border-gray-300 rounded-l-[50px] py-1 px-1 lg:py-2 lg:px-4 focus:outline-none focus:ring focus:border-blue-300"
                 />
                 <button
-                  class="bg-[#797DFC] hover:bg-blue-700 text-white font-bold py-1 px-1 lg:py-2 lg:px-4 rounded-r-[50px] focus:outline-none focus:ring focus:border-blue-300"
+                onclick="handleShowAll()"  class="bg-[#797DFC] hover:bg-blue-700 text-white font-bold py-1 px-1 lg:py-2 lg:px-4 rounded-r-[50px] focus:outline-none focus:ring focus:border-blue-300 " 
                 >
                   Search
                 </button>
+                <div id="loading-spinner" class="text-center my-40 hidden">
+                  <span class="loading text-primary loading-ring loading-lg"></span>
+                </div>
               </div>
             </div>
             <div class="bg-white rounded-3xl p-11">
@@ -149,23 +153,13 @@
                   <div class="lg:ml-16">
                     <div class="flex flex-col lg:flex-row">
                       <img class="w-5" src="images/fr.svg" alt="" />
-                      <p>Mark as read (4)</p>
+                      <p id="click-count">Mark as read </p>
                     </div>
                   </div>
                 </div>
-                <div class="">
-                  <div
-                    class="flex flex-col lg:flex-row lg:w-[390px] bg-white lg:p-6 rounded-lg"
-                  >
-                    <div>
-                      <p>10 Kids Unaware of Their Halloween Costume</p>
-                    </div>
-                    <div>
-                      <div class="flex flex-col lg:flex-row">
-                        <img class="w-5" src="images/eye.svg" alt="" /> 5000
-                      </div>
-                    </div>
-                  </div>
+                <div id="title-container" class=" my-5">
+                  
+                  
                 </div>
               </div>
             </div>
