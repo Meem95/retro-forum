@@ -21,7 +21,7 @@ const fetchDiscussionCategory = () =>{
             discussionCardBody.innerHTML = `
             <div  class="card lg:w-[780px] bg-[#7D7DFC1A] shadow-xl lg:p-8 mb-6">
               <div class="">
-                <div id="online" class="avatar ${card.isActive === true ? 'online' : 'offline'}  placeholder ml-36 mt-5" >
+                <div id="online" class="avatar ${card.isActive === true ? 'online' : 'offline'}  placeholder ml-36 lg:ml-1 mt-5" >
                   <div
                     class="bg-neutral text-neutral-content rounded-full w-16"
                   >
@@ -110,7 +110,7 @@ if(!searchData){
                 discussionCardBody.innerHTML = `
                 <div  class="card lg:w-[780px] bg-[#7D7DFC1A] shadow-xl lg:p-8 mb-6">
                   <div class="">
-                    <div id="online" class="avatar ${card.isActive === true ? 'online' : 'offline'}  placeholder  placeholder">
+                    <div id="online" class="avatar ${card.isActive === true ? 'online' : 'offline'}  placeholder  ml-36 lg:ml-1 mt-5">
                       <div
                         class="bg-neutral text-neutral-content rounded-full w-16"
                       >
